@@ -119,7 +119,7 @@ public class GameJessegonzalez {
             if (option == 1)
             {
                 eater = new Eater(eater.getName());
-                runEating();
+                runEating();;
             }
         }
     }
