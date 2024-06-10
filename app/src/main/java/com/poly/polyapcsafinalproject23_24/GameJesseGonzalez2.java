@@ -5,7 +5,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class GameJessegonzalez extends GameActivity {
+public class GameJesseGonzalez2 extends GameActivity {
 
     /**
      * player in game
@@ -62,7 +62,8 @@ public class GameJessegonzalez extends GameActivity {
      */
     private void createEater() {
         tvStoryText.setText("Hello Player");
-
+        Eater player = new Eater();
+        runEating();
     }
 
     /**
@@ -72,71 +73,76 @@ public class GameJessegonzalez extends GameActivity {
      */
 
     private void runEating() {
-        createEater();
-        while (eater.getEaten() < eater.getMaxEaten()) {
+        if (eater.getEaten() < eater.getMaxEaten()) {
             displayStats();
             chooseOption();
+        } else {
+            ivMain.setImageResource(R.drawable.im_gonzalezjesse_1);
+            endOfEating();
         }
-        endOfEating();
     }
 
     /**
      * displays the eater stats
      */
-    private void displayStats() {
-        String text =
-                eater.getName() +
-                        "\nChicken eaten: \t" + eater.getChicken() +
-                        "\nSalad eaten: \t" + eater.getSalad() +
-                        "\nBiscuits eaten: \t" + eater.getBiscuit() +
-                        "\nPotatoes eaten: \t" + eater.getPotatoes() +
-                        "\nTotal food eaten: \t" + eater.getEaten();
-        System.out.println(text);
+    private void displayStats()
+    {
+        tvBisuitVal.setText(""+eater.getBiscuit());
+        tvChickenVal.setText(""+eater.getChicken());
+        tvPotatoesVal.setText(""+eater.getPotatoes());
+        tvSaladVal.setText(""+eater.getSalad());
     }
 
     /**
      * eater chooses to eat chicken, salas, biscuits, or potatoes
      */
 
-    private void chooseOption() {
-
-
-        ivStory.setImageResource(R.drawable.im_gonzalezjesse_1);
-
-        tvStoryText.setText("What would you like to eat?");
-
+    private void chooseOption()
+    {
         setAllBtnsVisible();
         btn1.setText("Chicken");
         btn2.setText("Salad");
         btn3.setText("Biscuit");
-        btn4.setText("patato");
+        btn4.setText("potato");
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view)
+            {
                 eater.eatChicken();
+                ivMain.setImageResource(R.drawable.im_gonzalezjesse_2);
+                runEating();
             }
-        });
+        } );
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view)
+            {
                 eater.eatSalad();
+                ivMain.setImageResource(R.drawable.im_gonzalezjesse_3);
+                runEating();
             }
-        });
+        } );
 
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view)
+            {
                 eater.eatBiscuit();
+                ivMain.setImageResource(R.drawable.im_gonzalezjesse_1);
+                runEating();
             }
-        });
+        } );
 
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view)
+            {
                 eater.eatPotatoes();
+                ivMain.setImageResource(R.drawable.im_gonzalezjesse_2);
+                runEating();
             }
-        });
+        } );
 
 
     }
@@ -145,41 +151,37 @@ public class GameJessegonzalez extends GameActivity {
      * after eating reaches 10 the game ends
      * stats show how much of each food was eaten and may choose to player again
      */
-    private void endOfEating() {
-        ivStory.setImageResource(R.drawable.im_gonzalezjesse_2);
+    private void endOfEating()
+        {
+            ivMain.setImageResource(R.drawable.im_gonzalezjesse_2);
 
-        if (eater.getEaten() >= eater.getMaxEaten()) {
-            tvStoryText.setText("Eating OVER!");
+            btn1.setText("Chicken");
+            btn2.setText("Salad");
+            btn3.setVisibility(View.INVISIBLE);
+            btn4.setVisibility(View.INVISIBLE);
+
+            if (eater.getEaten() >= eater.getMaxEaten()) {
+                System.out.println("Eating done");
+                ivMain.setImageResource(R.drawable.im_gonzalezjesse_1);
+            }
+
+            tvMain.setText("You ate " + eater.getChicken() + "pieces of chicken " + eater.getSalad() + "salads " + eater.getBiscuit() + "biscuits " + eater.getPotatoes() + "potatoes. In total you ate " + eater.getEaten() + "foods! \nEat again\n1. yes\n2. no");
+
+
+            btn1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    eater = new Eater(eater.getName());
+                    tvMain.setText("Choose your food");
+
+                    ivMain.setImageResource(R.drawable.im_gonzalezjesse_1);
+                    runEating();
+                }
+            });
+
         }
+}        `
 
-        ivStory.setImageResource(R.drawable.im_gonzalezjesse_3);
-
-        tvStoryText.setText("You ate " + eater.getChicken() + "pieces of chicken " + eater.getSalad() + "salads " + eater.getBiscuit() + "biscuits " + eater.getPotatoes() + "potatoes. In total you ate " + eater.getEaten() + "foods! \nEat again\n1. yes\n2. no");
-
-        btn1.setText("Chicken");
-        btn2.setText("Salad");
-        btn3.setVisibility(View.INVISIBLE);
-        btn4.setVisibility(View.INVISIBLE);
-
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                eater = new Eater(eater.getName());
-                runEating();
-            }
-        });
-
-        btn2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ivStory.setImageResource(R.drawable.im_gonzalezjesse_2);
-
-                tvStoryText.setText("Eating OVER!");
-            }
-        });
-
-    }
-}
 
 
 
