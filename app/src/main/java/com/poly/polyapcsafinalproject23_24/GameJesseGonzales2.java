@@ -5,7 +5,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class GameJessegonzalez extends GameActivity {
+public class GameJesseGonzalez2 extends GameActivity {
 
     /**
      * player in game
